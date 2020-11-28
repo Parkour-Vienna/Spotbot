@@ -1,5 +1,6 @@
 import requests
-
+import logging
+import urllib
 
 class Forum(object):
     def __init__(self, url, username, key):
@@ -9,16 +10,18 @@ class Forum(object):
         self.header = {
             'Api-Username': username,
             'Api-Key': key,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json, text/javascript, */*; q=0.01',
+            'X-Requested-With': 'XMLHttpRequest'
         }
 
     def check_connection(self):
         resp = requests.get(url=self.url + '/categories.json', headers=self.header)
         if not resp.status_code == 200:
-            raise ConnectionError(f'Server responded with status code {resp.status_code}')
+            raise ConnectionError(f'Server responded with status code {resp.status_code} {resp}')
         if not resp.json()['category_list']['can_create_topic']:
             raise ConnectionError(f'Api Key does not have enough permissions')
-        print('Connection check successful')
+        logging.info('connection check successful')
 
     def create_topic(self, category_id, title, content):
         data = {
@@ -64,10 +67,24 @@ class Forum(object):
         if resp.status_code != 200:
             raise ConnectionError(f'Server responded with status code {resp.status_code}')
 
+    def search_topic(self, title):
+        logging.info(f'searching for existing topic with title: {title}')
+        results = self._get(f'/search/query?term={urllib.parse.quote(title)}')
+        if 'topics' not in results:
+            return None
+        for topic in results['topics']:
+            logging.info(f'found topic with title {topic["title"]}')
+            if topic['title'] == title:
+                return topic
+        return None
+
+    def close_topic(self, topic_id):
+        self._put(f'/t/{topic_id}/status', {'status': 'closed', 'enabled': 'true'})
+
     def _put(self, url, data={}):
         resp = requests.put(url=self.url + url, headers=self.header, json=data)
         if not resp.status_code == 200:
-            raise ConnectionError(f'Server responded with status code {resp.status_code}')
+            raise ConnectionError(f'Server responded with status code {resp.status_code} {resp.text}')
         return resp
 
     def _post(self, url, data):
