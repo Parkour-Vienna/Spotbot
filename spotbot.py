@@ -57,7 +57,23 @@ class Spotbot(object):
         topic = self.forum.search_topic(next.title())
         if topic is None:
             raise 'could not find topic for banner'
-        self.forum.make_banner(topic['id'])
+
+        topic_id = topic['id']
+        posts = self.forum.get_posts(topic_id)
+
+        bc = 0
+
+        for post in posts:
+            if 'action_code' in post:
+                if post['action_code'] == 'banner.enabled':
+                    bc += 1
+                elif post['action_code'] == 'banner.disabled':
+                    bc -= 1
+
+        if bc > 0:
+            logging.info('banner is already active')
+            return
+        self.forum.make_banner(topic_id)
 
     def reconcile(self, training: Training):
         topic = self.forum.search_topic(training.title())
