@@ -16,8 +16,8 @@ class Spotbot(object):
         logging.info(f'running spotbot at {now}')
 
         today = datetime.datetime.now()
-        nt = Spotbot._next_weekday(today, 4)
-        lt = Spotbot._last_weekday(today, 4)
+        nt = Spotbot._next_weekday(today, 1)
+        lt = Spotbot._last_weekday(today, 1)
         logging.info(f'next tuesday will be {nt}')
         logging.info(f'last tuesday was {lt}')
         nfm = Spotbot._next_weekday(today, 6)
@@ -110,10 +110,13 @@ class Spotbot(object):
         return None
 
     def create_thread(self, training):
-        # self.forum.remove_banner(training.thread_id)
-        # self.forum.change_topic_status(training.thread_id, 'pinned_globally', False)
 
-        resp = self.forum.create_topic(5, training.title(), training.initial_post_str())
-        # self.forum.change_topic_status(training.thread_id, 'pinned_globally', True)
+        event = {
+            'timezone': 'Europe/Vienna',
+            'all_day': 'false',
+            'start': training.event_date().isoformat()
+        }
+
+        resp = self.forum.create_topic(5, training.title(), training.initial_post_str(), event=event)
         logging.info(f'created thread for {training.title()}')
         return resp

@@ -20,15 +20,17 @@ class Forum(object):
         if not resp.status_code == 200:
             raise ConnectionError(f'Server responded with status code {resp.status_code} {resp}')
         if not resp.json()['category_list']['can_create_topic']:
-            raise ConnectionError(f'Api Key does not have enough permissions')
+            raise ConnectionError('Api Key does not have enough permissions')
         logging.info('connection check successful')
 
-    def create_topic(self, category_id, title, content):
+    def create_topic(self, category_id, title, content,event=None):
         data = {
             'title': title,
             'category': category_id,
             'raw': content,
         }
+        if event is not None:
+            data['event'] = event
         return self._post('/posts.json', data)
 
     def create_post(self, topic_id, content):

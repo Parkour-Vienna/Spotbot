@@ -1,3 +1,5 @@
+import pytz
+
 class Training(object):
     def __init__(self, date):
         self.date = date
@@ -13,6 +15,9 @@ class Training(object):
 
     def decision_time(self):
         return self.date
+
+    def event_date(self):
+        return self.date.replace(tzinfo=pytz.UTC)
 
 
 class Tuesdayness(Training):
@@ -33,6 +38,9 @@ class Tuesdayness(Training):
     def decision_time(self):
         return self.date.replace(hour=15, minute=0, second=0, microsecond=0)
 
+    def event_date(self):
+        return self.date.replace(hour=18, minute=0, second=0, microsecond=0, tzinfo=pytz.UTC)
+
 class ForumMeeting(Training):
     def __init__(self, date):
         super().__init__(date)
@@ -50,3 +58,6 @@ class ForumMeeting(Training):
 
     def decision_time(self):
         return self.date.replace(hour=12, minute=0, second=0, microsecond=0)
+
+    def event_date(self):
+        return self.date.replace(hour=12, minute=0, second=0, microsecond=0, tzinfo=pytz.UTC)
