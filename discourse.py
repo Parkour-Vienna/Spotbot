@@ -1,6 +1,8 @@
-import requests
 import logging
 import urllib
+
+import requests
+
 
 class Forum(object):
     def __init__(self, url, username, key):
@@ -23,7 +25,7 @@ class Forum(object):
             raise ConnectionError('Api Key does not have enough permissions')
         logging.info('connection check successful')
 
-    def create_topic(self, category_id, title, content,event=None):
+    def create_topic(self, category_id, title, content, event=None):
         data = {
             'title': title,
             'category': category_id,

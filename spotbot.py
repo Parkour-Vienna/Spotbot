@@ -1,6 +1,4 @@
 import datetime
-import json
-import os
 import logging
 
 from discourse import Forum
@@ -37,13 +35,14 @@ class Spotbot(object):
 
         self.pin_banner(trainings)
 
-
+    @staticmethod
     def _next_weekday(d, weekday):
         days_ahead = weekday - d.weekday()
         if days_ahead <= 0:
             days_ahead += 7
         return d + datetime.timedelta(days_ahead)
 
+    @staticmethod
     def _last_weekday(d, weekday):
         delta = d.weekday() - weekday
         return d - datetime.timedelta(delta)
@@ -52,11 +51,11 @@ class Spotbot(object):
         today = datetime.date.today()
         ordered = sorted(trainings, key=lambda t: t.date)
         filtered = list(filter(lambda t: t.date.date() >= today, ordered))
-        next = filtered[0]
-        logging.info(f'next training is {next.title()}')
-        topic = self.forum.search_topic(next.title())
+        next_training = filtered[0]
+        logging.info(f'next training is {next_training.title()}')
+        topic = self.forum.search_topic(next_training.title())
         if topic is None:
-            raise 'could not find topic for banner'
+            raise LookupError('could not find topic for banner')
 
         topic_id = topic['id']
         posts = self.forum.get_posts(topic_id)
@@ -95,7 +94,7 @@ class Spotbot(object):
         logging.info('posting decision')
         decision = self.find_spotdecision(topic_id)
         if decision is None:
-            logging.warn('decision should be made but not decison could be found')
+            logging.warning('decision should be made but not decison could be found')
             return
         logging.info(f'found decision "{decision}"')
         posts = self.forum.get_posts(topic_id)
