@@ -83,23 +83,23 @@ class Spotbot(object):
 
         topic_id = topic['id']
         logging.info(f'found topic with id {topic_id}')
-        logging.debug(f'topic {topic}')
+        logging.debug(f'  topic {topic}')
 
         if training.decision_time() > datetime.datetime.now():
-            logging.info('decison time not yet reached')
+            logging.info('  decison time not yet reached')
             return
-        if topic['closed']:
-            logging.info('decision has already been made')
+        if 'spot-decision' in self.forum.get_tags(topic_id):
+            logging.info('  decision has already been made')
             return
-        logging.info('posting decision')
+        logging.info('  posting decision')
         decision = self.find_spotdecision(topic_id)
         if decision is None:
-            logging.warning('decision should be made but not decison could be found')
+            logging.warning(' decision should be made but not decison could be found')
             return
-        logging.info(f'found decision "{decision}"')
+        logging.info(f'  found decision "{decision}"')
         posts = self.forum.get_posts(topic_id)
         self.forum.edit_post(posts[0]['id'], training.spotdecision_str(decision))
-        self.forum.close_topic(topic_id)
+        self.forum.edit_tags(topic_id, ['spot-decision'])
 
     def find_spotdecision(self, thread_id):
         posts = [x['cooked'] for x in self.forum.get_posts(thread_id)]
@@ -109,7 +109,6 @@ class Spotbot(object):
         return None
 
     def create_thread(self, training):
-
         event = {
             'timezone': 'Europe/Vienna',
             'all_day': 'false',

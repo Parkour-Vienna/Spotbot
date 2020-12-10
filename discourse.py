@@ -25,11 +25,12 @@ class Forum(object):
             raise ConnectionError('Api Key does not have enough permissions')
         logging.info('connection check successful')
 
-    def create_topic(self, category_id, title, content, event=None):
+    def create_topic(self, category_id, title, content, event=None, tags=''):
         data = {
             'title': title,
             'category': category_id,
             'raw': content,
+            'tags[]': tags
         }
         if event is not None:
             data['event'] = event
@@ -52,6 +53,15 @@ class Forum(object):
 
     def get_posts(self, topic_id):
         return self._get(f'/t/{topic_id}.json')['post_stream']['posts']
+
+    def get_tags(self, topic_id):
+        return self._get(f'/t/{topic_id}.json')['tags']
+
+    def edit_tags(self, topic_id, tags):
+        data = {
+            'tags': tags
+        }
+        return self._put(f'/t/-/{topic_id}.json', data)
 
     def make_banner(self, topic_id):
         self._put(f'/t/{topic_id}/make-banner')
