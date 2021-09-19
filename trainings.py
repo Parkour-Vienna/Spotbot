@@ -29,18 +29,18 @@ class Tuesdayness(Training):
         return 'Tuesdayness am ' + self.date.strftime('%d.%m.%Y')
 
     def initial_post_str(self):
-        return '<p>Dies ist der wöchentliche Thread um für die Tuesdayness abzustimmen.' \
+        return '<p>Hier ist der wöchentliche Thread um für die Tuesdayness abzustimmen.<br>' \
                'Ein paar Stunden vor dem Training werden die Stimmen zusammengezählt und der Spot entschieden.' \
-               '<br><a href="...">Genauere Infos zur Tuesdayness</a></p>'
+               '<br><a href="https://parkourvienna.at/t/was-ist-die-tuesdayness/1084">Mehr Infos zur Tuesdayness</a></p>'
 
     def spotdecision_str(self, spot_decision):
-        return spot_decision + '<br>Weitere Infos zur Tuesdayness findest du <a href="...">hier!</a>'
+        return spot_decision + '<br>Weitere Infos zur Tuesdayness findest du <a href="https://parkourvienna.at/t/was-ist-die-tuesdayness/1084">hier!</a>'
 
     def decision_time(self):
         return self.date.replace(hour=15, minute=0, second=0, microsecond=0)
 
     def event_date(self):
-        return self.date.replace(hour=18, minute=0, second=0, microsecond=0, tzinfo=pytz.UTC)
+        return self.date.replace(hour=17, minute=0, second=0, microsecond=0, tzinfo=pytz.UTC)
 
 
 class ForumMeeting(Training):
@@ -51,15 +51,15 @@ class ForumMeeting(Training):
         return 'Forum Meeting am ' + self.date.strftime('%d.%m.%Y')
 
     def initial_post_str(self):
-        return '<p>Dies ist der wöchentliche Thread für das Forum Meeting.' \
+        return '<p>Hier ist der wöchentliche Thread für das Forum Meeting.<br>' \
                'Ein paar Stunden vor dem Training werden die Stimmen zusammengezählt und der Spot entschieden.' \
-               '<br><a href="...">Genauere Infos zum Forum Meeting</a></p>'
+               '<br><a href="https://parkourvienna.at/t/forum-meeting-informationen/24">Mehr Infos zum Forum Meeting</a></p>'
 
     def spotdecision_str(self, spot_decision):
-        return spot_decision + '<br>Weitere Infos zum Forum Meeting findest du <a href="...">hier!</a>'
+        return spot_decision + '<br>Weitere Infos zum Forum Meeting findest du <a href="https://parkourvienna.at/t/forum-meeting-informationen/24">hier!</a>'
 
     def decision_time(self):
-        return self.date.replace(hour=12, minute=0, second=0, microsecond=0)
+        return self.date.replace(hour=11, minute=0, second=0, microsecond=0)
 
     def event_date(self):
-        return self.date.replace(hour=12, minute=0, second=0, microsecond=0, tzinfo=pytz.UTC)
+        return self.date.replace(hour=11, minute=0, second=0, microsecond=0, tzinfo=pytz.UTC)

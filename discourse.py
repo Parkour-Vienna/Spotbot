@@ -104,11 +104,11 @@ class Forum(object):
     def _post(self, url, data):
         resp = requests.post(url=self.url + url, headers=self.header, json=data)
         if not resp.status_code == 200:
-            raise ConnectionError(f'Server responded with status code {resp.status_code}')
+            raise ConnectionError(f'Server responded with status code {resp.status_code} {resp.text}')
         return resp.json()
 
     def _get(self, url):
         resp = requests.get(url=self.url + url, headers=self.header)
         if not resp.status_code == 200:
-            raise ConnectionError(f'Server responded with status code {resp.status_code}')
+            raise ConnectionError(f'Server responded with status code {resp.status_code} {resp.text}')
         return resp.json()
