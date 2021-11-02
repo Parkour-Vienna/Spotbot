@@ -1,5 +1,6 @@
 import pytz
 
+ev = pytz.timezone('Europe/Vienna')
 
 class Training(object):
     def __init__(self, date):
@@ -37,10 +38,10 @@ class Tuesdayness(Training):
         return spot_decision + '<br>Weitere Infos zur Tuesdayness findest du <a href="https://parkourvienna.at/t/was-ist-die-tuesdayness/1084">hier!</a>'
 
     def decision_time(self):
-        return self.date.replace(hour=15, minute=0, second=0, microsecond=0)
+        return ev.localize(self.date.replace(hour=15, minute=0, second=0, microsecond=0,tzinfo=None))
 
     def event_date(self):
-        return self.date.replace(hour=17, minute=0, second=0, microsecond=0, tzinfo=pytz.UTC)
+        return ev.localize(self.date.replace(hour=19, minute=0, second=0, microsecond=0,tzinfo=None))
 
 
 class ForumMeeting(Training):
@@ -59,7 +60,7 @@ class ForumMeeting(Training):
         return spot_decision + '<br>Weitere Infos zum Forum Meeting findest du <a href="https://parkourvienna.at/t/forum-meeting-informationen/24">hier!</a>'
 
     def decision_time(self):
-        return self.date.replace(hour=11, minute=0, second=0, microsecond=0)
+        return ev.localize(self.date.replace(hour=13, minute=0, second=0, microsecond=0,tzinfo=None))
 
     def event_date(self):
-        return self.date.replace(hour=11, minute=0, second=0, microsecond=0, tzinfo=pytz.UTC)
+        return ev.localize(self.date.replace(hour=13, minute=0, second=0, microsecond=0,tzinfo=None))

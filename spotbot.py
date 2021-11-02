@@ -1,5 +1,6 @@
 import datetime
 import logging
+import pytz
 
 from discourse import Forum
 from trainings import Training, Tuesdayness, ForumMeeting
@@ -10,10 +11,9 @@ class Spotbot(object):
         self.forum = forum
 
     def run(self):
-        now = datetime.datetime.now()
-        logging.info(f'running spotbot at {now}')
+        today = datetime.datetime.now(pytz.utc)
+        logging.info(f'running spotbot at {today}')
 
-        today = datetime.datetime.now()
         nt = Spotbot._next_weekday(today, 1)
         lt = Spotbot._last_weekday(today, 1)
         logging.info(f'next tuesday will be {nt}')
@@ -85,7 +85,7 @@ class Spotbot(object):
         logging.info(f'found topic with id {topic_id}')
         logging.debug(f'  topic {topic}')
 
-        if training.decision_time() > datetime.datetime.now():
+        if training.decision_time() > datetime.datetime.now(pytz.utc):
             logging.info('  decison time not yet reached')
             return
         if 'spot-decision' in self.forum.get_tags(topic_id):
@@ -114,7 +114,6 @@ class Spotbot(object):
             'all_day': 'false',
             'start': training.event_date().isoformat()
         }
-
         resp = self.forum.create_topic(5, training.title(), training.initial_post_str(), event=event)
-        logging.info(f'created thread for {training.title()}')
-        return resp
+        logging.info(f'created thread for {training.title()} at {training.event_date().isoformat()}')
+        return None
