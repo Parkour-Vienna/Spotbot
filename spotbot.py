@@ -109,11 +109,12 @@ class Spotbot(object):
         return None
 
     def create_thread(self, training):
+        start = (training.event_date().astimezone(pytz.utc) + datetime.timedelta(hours=1)).replace(tzinfo=None).isoformat()
         event = {
             'timezone': 'Europe/Vienna',
             'all_day': 'false',
-            'start': training.event_date().isoformat()
+            'start': start
         }
         resp = self.forum.create_topic(5, training.title(), training.initial_post_str(), event=event)
-        logging.info(f'created thread for {training.title()} at {training.event_date().isoformat()}')
+        logging.info(f'created thread for {training.title()} at {start}')
         return None
