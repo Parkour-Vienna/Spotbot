@@ -52,9 +52,14 @@ class ForumMeeting(Training):
         return 'Forum Meeting am ' + self.date.strftime('%d.%m.%Y')
 
     def initial_post_str(self):
-        return '<p>Hier ist der wöchentliche Thread für das Forum Meeting.<br>' \
-               'Ein paar Stunden vor dem Training werden die Stimmen zusammengezählt und der Spot entschieden.' \
-               '<br><a href="https://parkourvienna.at/t/forum-meeting-informationen/24">Mehr Infos zum Forum Meeting</a></p>'
+        header = '<p>Hier ist der wöchentliche Thread für das Forum Meeting.<br>' \
+                 'Ein paar Stunden vor dem Training werden die Stimmen zusammengezählt und der Spot entschieden.<br>\n'
+        extra = ''
+        trailer = '\n<a href="https://parkourvienna.at/t/forum-meeting-informationen/24">Mehr Infos zum Forum Meeting</a></p>'
+        if self.date.day <= 7:
+            extra = '\n> An diesem Training findet ein geleiteter Beginner-Workshop statt!\n'
+            
+        return header + extra + trailer
 
     def spotdecision_str(self, spot_decision):
         return spot_decision + '<br>Weitere Infos zum Forum Meeting findest du <a href="https://parkourvienna.at/t/forum-meeting-informationen/24">hier!</a>'
