@@ -53,7 +53,7 @@ class ForumMeeting(Training):
 
     def initial_post_str(self):
         header = '<p>Hier ist der wöchentliche Thread für das Forum Meeting.<br>' \
-                 'Ein paar Stunden vor dem Training werden die Stimmen zusammengezählt und der Spot entschieden.<br>\n'
+                 'Der Spot wird um 13 Uhr am Schwedenplatz entschieden.<br>\n'
         extra = ''
         trailer = '\n<a href="https://parkourvienna.at/t/forum-meeting-informationen/24">Mehr Infos zum Forum Meeting</a></p>'
         if self.date.day <= 7:
