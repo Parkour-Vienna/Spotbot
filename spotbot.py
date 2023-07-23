@@ -109,7 +109,7 @@ class Spotbot(object):
         return None
 
     def create_thread(self, training):
-        start = (training.event_date().astimezone(pytz.utc) + datetime.timedelta(hours=1)).replace(tzinfo=None).isoformat()
+        start = (training.event_date().astimezone(pytz.utc)).replace(tzinfo=None).isoformat()
         event = {
             'timezone': 'Europe/Vienna',
             'all_day': 'false',
