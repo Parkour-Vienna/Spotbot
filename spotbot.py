@@ -106,6 +106,8 @@ class Spotbot(object):
         for p in posts:
             if any(x in p.lower() for x in ['spot-decision:', 'spot decision:', 'decision:']):
                 return p
+            elif p == posts[-1] and 'decision' in p.lower() and '?' not in p:
+                return p
         return None
 
     def create_thread(self, training):
