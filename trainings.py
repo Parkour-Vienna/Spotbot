@@ -32,10 +32,10 @@ class Tuesdayness(Training):
     def initial_post_str(self):
         return '<p>Hier ist der wöchentliche Thread um für die Tuesdayness abzustimmen.<br>' \
                'Ein paar Stunden vor dem Training werden die Stimmen zusammengezählt und der Spot entschieden.' \
-               '<br><a href="https://parkourvienna.at/t/was-ist-die-tuesdayness/1084">Mehr Infos zur Tuesdayness</a></p>'
+               '<br><a href="https://parkour.wien/t/was-ist-die-tuesdayness/1084">Mehr Infos zur Tuesdayness</a></p>'
 
     def spotdecision_str(self, spot_decision):
-        return spot_decision + '<br>Weitere Infos zur Tuesdayness findest du <a href="https://parkourvienna.at/t/was-ist-die-tuesdayness/1084">hier!</a>'
+        return spot_decision + '<br>Weitere Infos zur Tuesdayness findest du <a href="https://parkour.wien/t/was-ist-die-tuesdayness/1084">hier!</a>'
 
     def decision_time(self):
         return ev.localize(self.date.replace(hour=15, minute=0, second=0, microsecond=0,tzinfo=None))
@@ -55,14 +55,14 @@ class ForumMeeting(Training):
         header = '<p>Hier ist der wöchentliche Thread für das Forum Meeting.<br>' \
                  'Die hier abgegebenen Stimmen werden bei der Entscheidung am Schwedenplatz berücksichtigt.<br>\n'
         extra = ''
-        trailer = '\n<a href="https://parkourvienna.at/t/forum-meeting-informationen/24">Mehr Infos zum Forum Meeting</a></p>'
+        trailer = '\n<a href="https://parkour.wien/t/forum-meeting-informationen/24">Mehr Infos zum Forum Meeting</a></p>'
         if self.date.day <= 7:
             extra = '\n> Bei diesem Training findet ein geleiteter Beginner-Workshop statt!\n'
             
         return header + extra + trailer
 
     def spotdecision_str(self, spot_decision):
-        return spot_decision + '<br>Weitere Infos zum Forum Meeting findest du <a href="https://parkourvienna.at/t/forum-meeting-informationen/24">hier!</a>'
+        return spot_decision + '<br>Weitere Infos zum Forum Meeting findest du <a href="https://parkour.wien/t/forum-meeting-informationen/24">hier!</a>'
 
     def decision_time(self):
         return ev.localize(self.date.replace(hour=13, minute=0, second=0, microsecond=0,tzinfo=None))
