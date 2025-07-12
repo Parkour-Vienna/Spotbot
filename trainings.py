@@ -56,9 +56,7 @@ class ForumMeeting(Training):
                  'Die hier abgegebenen Stimmen werden bei der Entscheidung am Schwedenplatz berücksichtigt.<br>\n'
         extra = ''
         trailer = '\n<a href="https://parkour.wien/t/forum-meeting-informationen/24">Mehr Infos zum Forum Meeting</a></p>'
-        if self.date.day <= 7:
-            extra = '\n> Bei diesem Training findet ein geleiteter Beginner-Workshop statt!\n'
-            
+        extra = '\n> Bei diesem Training findet ein geleiteter Beginner-Workshop statt!\n'
         return header + extra + trailer
 
     def spotdecision_str(self, spot_decision):
